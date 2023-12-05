@@ -24,21 +24,21 @@ public class Chrono extends AppCompatActivity {
     int prev = 0 ;
     List<Count_handler> l;
     RecyclerView rv;
-//    Thread inc = new Thread(() -> {
-//        synchronized (this){
-//            while(true) {
-//                if(!ok){
-//                    try {
-//                        wait();
-//                    } catch (InterruptedException e) {}
-//                }
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (Exception e) {}
-//                runOnUiThread(() -> counter.setText(formatHours(""+(++secs))));
-//            }
-//        }
-//    });
+    Thread inc = new Thread(() -> {
+        synchronized (this){
+            while(true) {
+                if(!ok){
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {}
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {}
+                runOnUiThread(() -> counter.setText(formatHours(""+(++secs))));
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Chrono extends AppCompatActivity {
         l = new ArrayList<Count_handler>();
     }
 
-    void initChrono (View v){
+    public void initChrono (View v){
         if (!fs){
             //inc.start();
             fs=true;
@@ -61,17 +61,17 @@ public class Chrono extends AppCompatActivity {
         ok = true;
     }
 
-    synchronized void pauseChrono (){
+    public synchronized void pauseChrono (){
         ok = ok ? false : ok;
     }
 
-    void record (View v){
+    public void record (View v){
         l.add(new Count_handler(""+(secs-prev)));
         rv.setAdapter(new Count_adapter(l));
         prev = secs;
     }
 
-    String formatHours(String s) {
+    public String formatHours(String s) {
         int t = Integer.parseInt(s);
         int m = 0;
         int h = 0;

@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    void init(View v){
+    public void init(View v){
         Intent i = new Intent(this, Chrono.class);
         startActivity(i);
     }
 
-    void quit (){
+    public void quit (){
         finish();
     }
 }
